@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIH-2025 PS-228 Solution Architecture Presentation</title>
+    <style>
+        :root {
+            --primary-blue: #1a73e8;
+            --dark-blue: #0d47a1;
+            --navy: #0f172a;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border-light: #cbd5e1;
+            --bg-canvas: #f8fafc;
+            --slide-bg: #ffffff;
+            
+            /* Card & Box Pastels matching reference image */
+            --pastel-green-bg: #e8f5e9;
+            --pastel-green-border: #a5d6a7;
+            --pastel-orange-bg: #fbe9e7;
+            --pastel-orange-border: #ffccbc;
+            --pastel-yellow-bg: #fffde7;
+            --pastel-yellow-border: #fff59d;
+            --pastel-blue-bg: #e1f5fe;
+            --pastel-blue-border: #b3e5fc;
+            --pastel-pink-bg: #fce4ec;
+            --pastel-pink-border: #f8bbd0;
+            --pastel-purple-bg: #f3e5f5;
+            --pastel-purple-border: #e1bee7;
+            --banner-bg: #e0f2f1;
+            --banner-border: #80cbc4;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: #202124;
+            color: #e8eaed;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Google Slides Mock Chrome Header */
+        .gslides-header {
+            background-color: #ffffff;
+            color: #202124;
+            border-bottom: 1px solid #dadce0;
+            padding: 6px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+            user-select: none;
+            z-index: 10;
+        }
+
+        .gslides-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .gslides-logo {
+            width: 32px;
+            height: 32px;
+            background: #fbbc04;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .doc-title-box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .doc-title-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .star-icon {
+            color: #5f6368;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .doc-menu-row {
+            display: flex;
+            gap: 14px;
+            font-size: 13px;
+            color: #3c4043;
+            margin-top: 2px;
+        }
+
+        .doc-menu-row span {
+            cursor: pointer;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .doc-menu-row span:hover {
+            background-color: #f1f3f4;
+        }
+
+        .gslides-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-slideshow {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .btn-slideshow:hover {
+            background: #1557b0;
+        }
+
+        .btn-mode {
+            background: #f1f3f4;
+            color: #3c4043;
+            border: 1px solid #dadce0;
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-mode:hover {
+            background: #e8eaed;
+        }
+
+        /* Toolbar row */
+        .gslides-toolbar {
+            background-color: #edf2fc;
+            border-bottom: 1px solid #dadce0;
+            padding: 4px 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 13px;
+            color: #444746;
+            height: 38px;
+            user-select: none;
+        }
+
+        .toolbar-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tb-btn {
+            padding: 4px 6px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tb-btn:hover {
+            background-color: rgba(0,0,0,0.06);
+        }
+
+        .tb-divider {
+            width: 1px;
+            height: 20px;
+            background-color: #dadce0;
+        }
+
+        /* Main Workspace */
+        .workspace {
+            flex: 1;
+            display: flex;
+            position: relative;
+            overflow: hidden;
+            background-color: #202124;
+        }
+
+        /* Left Thumbnails Panel */
+        .thumbnails-panel {
+            width: 170px;
+            background-color: #202124;
+            border-right: 1px solid #3c4043;
+            overflow-y: auto;
+            padding: 14px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            user-select: none;
+            transition: width 0.3s;
+        }
+
+        .thumb-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .thumb-index {
+            color: #9aa0a6;
+            font-size: 12px;
+            font-weight: 600;
+            width: 16px;
+            margin-top: 18px;
+            text-align: right;
+        }
+
+        .thumb-preview {
+            flex: 1;
+            aspect-ratio: 16 / 9;
+            background: #ffffff;
+            border-radius: 4px;
+            border: 2px solid transparent;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            padding: 4px;
+            transition: transform 0.15s, border-color 0.15s;
+        }
+
+        .thumb-item.active .thumb-preview {
+            border-color: #1a73e8;
+            outline: 2px solid #1a73e8;
+        }
+
+        .thumb-title {
+            font-size: 6px;
+            font-weight: bold;
+            color: #1e293b;
+            text-align: center;
+            border-bottom: 0.5px solid #eee;
+            padding-bottom: 2px;
+        }
+
+        .thumb-diagram-mock {
+            display: flex;
+            gap: 2px;
+            margin-top: 3px;
+            flex: 1;
+        }
+
+        .thumb-box {
+            flex: 1;
+            border-radius: 1px;
+            opacity: 0.8;
+        }
+
+        /* Slide Stage Container */
+        .slide-stage-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: auto;
+            background-color: #292a2d;
+        }
+
+        /* 16:9 Presentation Canvas */
+        .slide-canvas {
+            width: 1280px;
+            height: 720px;
+            min-width: 1280px;
+            min-height: 720px;
+            max-width: 1280px;
+            max-height: 720px;
+            background: var(--slide-bg);
+            color: var(--text-dark);
+            border-radius: 2px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform-origin: center center;
+            transition: transform 0.2s ease;
+        }
+
+        /* Bottom Blue Accent Line */
+        .slide-bottom-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: #1976d2;
+            z-index: 50;
+        }
+
+        /* Slide Top Header Bar */
+        .slide-header {
+            padding: 12px 28px 4px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 20;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sih-letter-s {
+            font-size: 38px;
+            font-weight: 900;
+            color: #1976d2;
+            font-family: 'Arial Black', Impact, sans-serif;
+            line-height: 1;
+        }
+
+        .header-title-box {
+            text-align: center;
+            flex: 1;
+        }
+
+        .slide-main-title {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            color: #0f172a;
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+
+        .slide-subtitle {
+            font-size: 13px;
+            font-weight: 700;
+            color: #334155;
+            margin-top: 3px;
+            letter-spacing: 0.3px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-align: right;
+        }
+
+        .sih-emblem-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .sih-tag {
+            font-size: 11px;
+            font-weight: 800;
+            color: #1e3a8a;
+            letter-spacing: 0.5px;
+        }
+
+        .sih-year {
+            font-size: 14px;
+            font-weight: 900;
+            color: #0f172a;
+        }
+
+        .ps-pill {
+            background: #fee2e2;
+            color: #b91c1c;
+            border: 1px solid #fca5a5;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-top: 2px;
+        }
+
+        /* Slide Main Body Layout: Diagram (Left 68%) + Specs (Right 32%) */
+        .slide-body {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 68% 32%;
+            padding: 8px 24px 18px 24px;
+            gap: 16px;
+            height: calc(100% - 70px);
+        }
+
+        /* LEFT DIAGRAM CONTAINER */
+        .diagram-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            height: 100%;
+        }
+
+        .diagram-canvas {
+            flex: 1;
+            position: relative;
+            background: #fafafa;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 10px;
+            display: grid;
+            grid-template-columns: 140px 105px 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        /* Diagram Component Boxes */
+        .diag-box {
+            border-radius: 6px;
+            padding: 8px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border-width: 1.5px;
+            border-style: solid;
+            font-size: 11px;
+        }
+
+        .diag-box-header {
+            font-size: 11px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        /* Input Column */
+        .box-input {
+            grid-column: 1;
+            grid-row: 1 / span 2;
+            background: var(--pastel-green-bg);
+            border-color: var(--pastel-green-border);
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .input-card {
+            background: #ffffff;
+            border: 1px solid #c8e6c9;
+            border-radius: 5px;
+            padding: 7px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .input-card-title {
+            font-weight: 700;
+            color: #2e7d32;
+            font-size: 10.5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .input-card-sub {
+            font-size: 9px;
+            color: #555;
+            margin-top: 3px;
+            line-height: 1.2;
+        }
+
+        .gateway-node {
+            background: #1976d2;
+            color: white;
+            padding: 4px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 9.5px;
+            font-weight: bold;
+            margin-top: 4px;
+            box-shadow: 0 2px 4px rgba(25, 118, 210, 0.3);
+        }
+
+        /* Central Processor Box */
+        .box-processor {
+            grid-column: 2;
+            grid-row: 1 / span 2;
+            background: var(--pastel-pink-bg);
+            border-color: var(--pastel-pink-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-align: center;
+        }
+
+        .brick-firewall {
+            width: 52px;
+            height: 38px;
+            background: repeating-linear-gradient(
+                0deg,
+                #b0bec5,
+                #b0bec5 5px,
+                #78909c 6px,
+                #78909c 11px
+            );
+            border: 1px solid #546e7a;
+            border-radius: 3px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+        }
+
+        .processor-hub {
+            background: #ffffff;
+            border: 1.5px solid #ec407a;
+            padding: 6px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 10px;
+            color: #ad1457;
+            box-shadow: 0 2px 5px rgba(233, 30, 99, 0.15);
+            width: 100%;
+        }
+
+        /* Training Data Integrity (Top Center) */
+        .box-data-integrity {
+            grid-column: 3;
+            grid-row: 1;
+            background: var(--pastel-yellow-bg);
+            border-color: var(--pastel-yellow-border);
+        }
+
+        .integrity-card-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .micro-card {
+            background: #ffffff;
+            border: 1px solid rgba(0,0,0,0.08);
+            border-radius: 4px;
+            padding: 4px 6px;
+            font-size: 9.5px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+        }
+
+        .micro-card.yellow {
+            border-left: 3px solid #fbc02d;
+            color: #7c4a03;
+        }
+
+        .micro-card.blue {
+            border-left: 3px solid #1976d2;
+            color: #0d47a1;
+        }
+
+        .micro-card.purple {
+            border-left: 3px solid #8e24aa;
+            color: #4a148c;
+        }
+
+        .micro-card.cyan {
+            border-left: 3px solid #00acc1;
+            color: #006064;
+        }
+
+        /* Model Integrity (Bottom Center) */
+        .box-model-integrity {
+            grid-column: 3;
+            grid-row: 2;
+            background: var(--pastel-blue-bg);
+            border-color: var(--pastel-blue-border);
+        }
+
+        /* Inference Provenance & Blockchain Chain (Right Top) */
+        .box-inference-chain {
+            grid-column: 4;
+            grid-row: 1;
+            background: var(--pastel-purple-bg);
+            border-color: var(--pastel-purple-border);
+        }
+
+        /* Distribution Shift & Governance (Right Bottom) */
+        .box-governance {
+            grid-column: 4;
+            grid-row: 2;
+            background: var(--pastel-orange-bg);
+            border-color: var(--pastel-orange-border);
+        }
+
+        /* Legend box overlay in diagram */
+        .diagram-legend {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 5px 8px;
+            font-size: 8.5px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+        }
+
+        .legend-title {
+            font-weight: 800;
+            color: #334155;
+            text-transform: uppercase;
+            font-size: 8px;
+            border-bottom: 0.5px solid #e2e8f0;
+            padding-bottom: 2px;
+            margin-bottom: 1px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #475569;
+        }
+
+        .legend-icon-brick {
+            width: 10px;
+            height: 7px;
+            background: #90a4ae;
+            border-radius: 1px;
+        }
+
+        .legend-icon-router {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #1976d2;
+        }
+
+        .legend-icon-chain {
+            width: 8px;
+            height: 8px;
+            background: #8e24aa;
+            border-radius: 2px;
+        }
+
+        /* Big Total Benchmark Banner Box (Bottom of diagram) */
+        .benchmark-banner {
+            background: var(--banner-bg);
+            border: 2px solid var(--banner-border);
+            border-radius: 6px;
+            padding: 10px 16px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+        }
+
+        .banner-stat-row {
+            font-size: 16px;
+            font-weight: 900;
+            color: #004d40;
+            letter-spacing: 0.5px;
+        }
+
+        .banner-sub-row {
+            font-size: 11px;
+            font-weight: 700;
+            color: #00695c;
+            margin-top: 3px;
+        }
+
+        .banner-desc-row {
+            font-size: 9.5px;
+            color: #00796b;
+            font-style: italic;
+            margin-top: 2px;
+        }
+
+        /* RIGHT SPECIFICATION CARDS SECTION (32% width) */
+        .specs-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            height: 100%;
+        }
+
+        .spec-card {
+            border-radius: 6px;
+            padding: 8px 12px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid transparent;
+            flex: 1;
+            justify-content: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .spec-card.green {
+            background: var(--pastel-green-bg);
+            border-color: var(--pastel-green-border);
+        }
+
+        .spec-card.orange {
+            background: var(--pastel-orange-bg);
+            border-color: var(--pastel-orange-border);
+        }
+
+        .spec-card.yellow {
+            background: var(--pastel-yellow-bg);
+            border-color: var(--pastel-yellow-border);
+        }
+
+        .spec-card.blue {
+            background: var(--pastel-blue-bg);
+            border-color: var(--pastel-blue-border);
+        }
+
+        .spec-card-title {
+            font-size: 11.5px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 5px;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            padding-bottom: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.2px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .spec-badge {
+            font-size: 9px;
+            font-weight: 700;
+            padding: 1px 5px;
+            border-radius: 3px;
+            background: rgba(0,0,0,0.07);
+        }
+
+        .spec-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5px;
+            font-size: 9.5px;
+            color: #334155;
+            line-height: 1.25;
+        }
+
+        .spec-list li {
+            position: relative;
+            padding-left: 10px;
+        }
+
+        .spec-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #1976d2;
+            font-weight: bold;
+        }
+
+        .spec-label {
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .spec-val {
+            font-family: inherit;
+        }
+
+        /* Fullscreen Presentation Mode Styles */
+        body.presentation-mode .gslides-header,
+        body.presentation-mode .gslides-toolbar,
+        body.presentation-mode .thumbnails-panel {
+            display: none !important;
+        }
+
+        body.presentation-mode .slide-stage-container {
+            padding: 0;
+            background: #000;
+        }
+
+        body.presentation-mode .slide-canvas {
+            box-shadow: none;
+            border-radius: 0;
+            width: 100vw;
+            height: 56.25vw; /* 16:9 */
+            max-height: 100vh;
+            max-width: 177.78vh; /* 16:9 */
+        }
+
+        /* SVG Connectors */
+        .flow-arrow {
+            position: absolute;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        /* Print media styling */
+        @media print {
+            body {
+                background: white;
+            }
+            .gslides-header, .gslides-toolbar, .thumbnails-panel {
+                display: none;
+            }
+            .slide-stage-container {
+                padding: 0;
+            }
+            .slide-canvas {
+                box-shadow: none;
+                width: 100%;
+                height: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Google Slides Mock Chrome Header -->
+    <header class="gslides-header">
+        <div class="gslides-left">
+            <div class="gslides-logo">S</div>
+            <div class="doc-title-box">
+                <div class="doc-title-row">
+                    <span>SIH-2025 PS-228 Solution Presentation</span>
+                    <span class="star-icon">☆</span>
+                </div>
+                <div class="doc-menu-row">
+                    <span>File</span>
+                    <span>Edit</span>
+                    <span>View</span>
+                    <span>Insert</span>
+                    <span>Format</span>
+                    <span>Slide</span>
+                    <span>Arrange</span>
+                    <span>Tools</span>
+                    <span>Extensions</span>
+                    <span>Help</span>
+                </div>
+            </div>
+        </div>
+        <div class="gslides-right">
+            <button class="btn-mode" onclick="toggleThumbnails()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+                <span>Sidebar</span>
+            </button>
+            <button class="btn-slideshow" onclick="togglePresentationMode()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span>Slideshow (F)</span>
+            </button>
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: #1a73e8; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px;">
+                SIH
+            </div>
+        </div>
+    </header>
+
+    <!-- Google Slides Toolbar -->
+    <div class="gslides-toolbar">
+        <div class="toolbar-group">
+            <span class="tb-btn" title="Undo">↶</span>
+            <span class="tb-btn" title="Redo">↷</span>
+            <span class="tb-btn" title="Print" onclick="window.print()">🖨️</span>
+            <span class="tb-btn" title="Zoom">🔍 100%</span>
+        </div>
+        <div class="tb-divider"></div>
+        <div class="toolbar-group">
+            <span class="tb-btn" style="background:#e8f0fe; font-weight:bold; color:#1a73e8;">Select (V)</span>
+            <span class="tb-btn">Text box</span>
+            <span class="tb-btn">Insert image</span>
+            <span class="tb-btn">Shape</span>
+            <span class="tb-btn">Line</span>
+        </div>
+        <div class="tb-divider"></div>
+        <div class="toolbar-group">
+            <span style="font-weight: 500; font-size: 12px; color: #1e3a8a;">Slide 1 of 1 — [PS-228: Solution Architecture]</span>
+        </div>
+    </div>
+
+    <!-- Main Workspace -->
+    <div class="workspace">
+        
+        <!-- Left Thumbnail Strip (Matching Google Slides Pitch Deck) -->
+        <aside class="thumbnails-panel" id="thumbPanel">
+            <!-- Slide 1: Cover -->
+            <div class="thumb-item" onclick="showNotification('Cover slide preview')">
+                <span class="thumb-index">1</span>
+                <div class="thumb-preview">
+                    <div class="thumb-title">SMART INDIA HACKATHON 2025</div>
+                    <div style="font-size: 4px; text-align: center; color: #555; margin-top: 4px;">PS-228 | Team Pitch</div>
+                    <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+                        <div style="width: 18px; height: 18px; border-radius: 50%; background: #e0f2fe; border: 1px solid #38bdf8;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: Methodology -->
+            <div class="thumb-item" onclick="showNotification('Methodology slide preview')">
+                <span class="thumb-index">2</span>
+                <div class="thumb-preview">
+                    <div class="thumb-title">TRUST-AWARE LIFECYCLE</div>
+                    <div class="thumb-diagram-mock">
+                        <div class="thumb-box" style="background:#e8f5e9;"></div>
+                        <div class="thumb-box" style="background:#e1f5fe;"></div>
+                        <div class="thumb-box" style="background:#f3e5f5;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: SOLUTION (ACTIVE - MATCHES UPLOADED IMAGE) -->
+            <div class="thumb-item active" onclick="showNotification('Viewing Solution Slide')">
+                <span class="thumb-index">3</span>
+                <div class="thumb-preview">
+                    <div class="thumb-title" style="color:#1976d2; font-weight:900;">SOLUTION ARCHITECTURE</div>
+                    <div class="thumb-diagram-mock" style="flex-direction:column; gap:2px;">
+                        <div style="display:flex; gap:2px; height:60%;">
+                            <div class="thumb-box" style="background:#ffebee; width:30%;"></div>
+                            <div class="thumb-box" style="background:#fff9c4; width:35%;"></div>
+                            <div class="thumb-box" style="background:#e8f5e9; width:35%;"></div>
+                        </div>
+                        <div class="thumb-box" style="background:#e0f2f1; height:35%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Technical Approach -->
+            <div class="thumb-item" onclick="showNotification('Technical Approach slide preview')">
+                <span class="thumb-index">4</span>
+                <div class="thumb-preview">
+                    <div class="thumb-title">TECHNICAL IMPLEMENTATION</div>
+                    <div class="thumb-diagram-mock">
+                        <div class="thumb-box" style="background:#f1f5f9;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: Feasibility -->
+            <div class="thumb-item" onclick="showNotification('Feasibility slide preview')">
+                <span class="thumb-index">5</span>
+                <div class="thumb-preview">
+                    <div class="thumb-title">FEASIBILITY & EVALUATION</div>
+                    <div class="thumb-diagram-mock">
+                        <div class="thumb-box" style="background:#fff3e0;"></div>
+                        <div class="thumb-box" style="background:#f3e5f5;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 6: Impacts -->
+            <div class="thumb-item" onclick="showNotification('Impact & Deployment slide preview')">
+                <span class="thumb-index">6</span>
+                <div class="thumb-preview">
+                    <div class="thumb-title">IMPACT & DEPLOYMENT</div>
+                    <div class="thumb-diagram-mock">
+                        <div class="thumb-box" style="background:#f8fafc;"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Presentation Slide Stage -->
+        <main class="slide-stage-container" id="stageContainer">
+            
+            <!-- 16:9 Presentation Canvas -->
+            <div class="slide-canvas" id="slideCanvas">
+                
+                <!-- Bottom Solid Blue Stripe (Exactly as reference) -->
+                <div class="slide-bottom-bar"></div>
+
+                <!-- Slide Header (Title + Subtitle + Logos) -->
+                <header class="slide-header">
+                    <div class="header-left">
+                        <div class="sih-letter-s">S</div>
+                    </div>
+
+                    <div class="header-title-box">
+                        <h1 class="slide-main-title">SOLUTION</h1>
+                        <p class="slide-subtitle">Trustworthy Computer Vision Integrity Assurance for Multi-Contributor Pipelines</p>
+                    </div>
+
+                    <div class="header-right">
+                        <div class="sih-emblem-badge">
+                            <span class="sih-tag">SIH HACKATHON</span>
+                            <span class="sih-year">2024–2025</span>
+                            <span class="ps-pill">PS-228 : CYBERSECURITY</span>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Slide Main Grid Layout -->
+                <div class="slide-body">
+                    
+                    <!-- LEFT 68%: DETAILED ARCHITECTURAL PIPELINE DIAGRAM -->
+                    <section class="diagram-section">
+                        
+                        <div class="diagram-canvas">
+                            
+                            <!-- Legend Inset Box (Top Right) -->
+                            <div class="diagram-legend">
+                                <span class="legend-title">System Legend</span>
+                                <div class="legend-item">
+                                    <div class="legend-icon-brick"></div>
+                                    <span>Security Checkpoint</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-icon-router"></div>
+                                    <span>Ingestion Hub Node</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-icon-chain"></div>
+                                    <span>HMAC Binding Chain</span>
+                                </div>
+                            </div>
+
+                            <!-- 1. Input Layer Box (Pastel Green) -->
+                            <div class="diag-box box-input">
+                                <div class="diag-box-header" style="color: #2e7d32;">Ingestion Layer</div>
+                                
+                                <div class="input-card">
+                                    <div class="input-card-title">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                                        Dataset Stream
+                                    </div>
+                                    <div class="input-card-sub">COCO Instances &amp; YOLO Labels</div>
+                                </div>
+
+                                <div class="input-card">
+                                    <div class="input-card-title">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                                        Model Weights
+                                    </div>
+                                    <div class="input-card-sub">PyTorch (.pt) &amp; ONNX Models</div>
+                                </div>
+
+                                <div class="input-card">
+                                    <div class="input-card-title">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                                        Inference Stream
+                                    </div>
+                                    <div class="input-card-sub">Live Operational Queries</div>
+                                </div>
+
+                                <div class="gateway-node">
+                                    SHA-256 Hashing Gateway
+                                </div>
+                            </div>
+
+                            <!-- 2. Central Processor & Orchestrator (Pastel Pink) -->
+                            <div class="diag-box box-processor">
+                                <div class="brick-firewall" title="Hardware/Air-gap Security Barrier">
+                                    AIR-GAP
+                                </div>
+                                <div class="processor-hub">
+                                    CENTRAL ASSURANCE CONTROLLER
+                                </div>
+                                <div style="font-size: 8.5px; color: #880e4f; line-height: 1.2;">
+                                    Provenance Logger &amp; Dispatcher
+                                </div>
+                                <div class="brick-firewall" title="Isolation Barrier">
+                                    CHECKS
+                                </div>
+                            </div>
+
+                            <!-- 3. Training-Data Integrity Engine (Top Center - Pastel Yellow) -->
+                            <div class="diag-box box-data-integrity">
+                                <div class="diag-box-header" style="color: #f57f17;">Data Integrity Engine (M1)</div>
+                                <div class="integrity-card-list">
+                                    <div class="micro-card yellow">
+                                        <span>Trigger Patch Scanner</span>
+                                        <span style="font-size: 8px; color: #b78103;">10x10 Var</span>
+                                    </div>
+                                    <div class="micro-card yellow">
+                                        <span>pHash Near-Duplicate Filter</span>
+                                        <span style="font-size: 8px; color: #b78103;">Hamming&le;5</span>
+                                    </div>
+                                    <div class="micro-card yellow">
+                                        <span>Label Flip / Skew Detector</span>
+                                        <span style="font-size: 8px; color: #b78103;">Disparity&lt;10%</span>
+                                    </div>
+                                    <div class="micro-card yellow">
+                                        <span>OOD Feature Z-Score Scan</span>
+                                        <span style="font-size: 8px; color: #b78103;">Z &gt; 3.0&sigma;</span>
+                                    </div>
+                                    <div class="micro-card yellow">
+                                        <span>Contributor Risk Aggregator</span>
+                                        <span style="font-size: 8px; color: #b78103;">Source Rollup</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 4. Model Integrity Engine (Bottom Center - Pastel Blue) -->
+                            <div class="diag-box box-model-integrity">
+                                <div class="diag-box-header" style="color: #0d47a1;">Model Integrity Engine (M2)</div>
+                                <div class="integrity-card-list">
+                                    <div class="micro-card blue">
+                                        <span>SHA-256 Identity Digest</span>
+                                        <span style="font-size: 8px; color: #1565c0;">Hash Match</span>
+                                    </div>
+                                    <div class="micro-card blue">
+                                        <span>Behavioral Probing Battery</span>
+                                        <span style="font-size: 8px; color: #1565c0;">5x Test Input</span>
+                                    </div>
+                                    <div class="micro-card blue">
+                                        <span>Weight Tensor Sparsity</span>
+                                        <span style="font-size: 8px; color: #1565c0;">Zero-Rate</span>
+                                    </div>
+                                    <div class="micro-card blue">
+                                        <span>NaN / Inf Poison Scanner</span>
+                                        <span style="font-size: 8px; color: #1565c0;">Bounds Check</span>
+                                    </div>
+                                    <div class="micro-card blue">
+                                        <span>Black-Box Fallback Probe</span>
+                                        <span style="font-size: 8px; color: #1565c0;">Non-Invasive</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 5. Inference Provenance Engine (Top Right - Pastel Purple) -->
+                            <div class="diag-box box-inference-chain">
+                                <div class="diag-box-header" style="color: #6a1b9a;">Inference Provenance (M3)</div>
+                                <div class="integrity-card-list">
+                                    <div class="micro-card purple">
+                                        <span>HMAC-SHA256 Binding</span>
+                                        <span style="font-size: 8px; color: #7b1fa2;">256-bit Key</span>
+                                    </div>
+                                    <div class="micro-card purple">
+                                        <span>Nonce &amp; Timestamp Guard</span>
+                                        <span style="font-size: 8px; color: #7b1fa2;">Anti-Replay</span>
+                                    </div>
+                                    <div class="micro-card purple">
+                                        <span>Hash-Chained Audit Trail</span>
+                                        <span style="font-size: 8px; color: #7b1fa2;">Blockchain</span>
+                                    </div>
+                                    <div class="micro-card purple">
+                                        <span>Post-Hoc Tamper Detector</span>
+                                        <span style="font-size: 8px; color: #7b1fa2;">Bit-Exact</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 6. Distribution Shift & Governance (Bottom Right - Pastel Cyan/Orange) -->
+                            <div class="diag-box box-governance">
+                                <div class="diag-box-header" style="color: #d84315;">Drift &amp; Governance (M4, M5)</div>
+                                <div class="integrity-card-list">
+                                    <div class="micro-card cyan">
+                                        <span>Distribution Drift Z-Score</span>
+                                        <span style="font-size: 8px; color: #00838f;">Mean/Std Test</span>
+                                    </div>
+                                    <div class="micro-card cyan">
+                                        <span>Shift Type Classifier</span>
+                                        <span style="font-size: 8px; color: #00838f;">Illum / Sensor</span>
+                                    </div>
+                                    <div class="micro-card cyan">
+                                        <span>Calibrated Risk Scoring</span>
+                                        <span style="font-size: 8px; color: #00838f;">0.0 &ndash; 1.0</span>
+                                    </div>
+                                    <div class="micro-card cyan">
+                                        <span>Sealed Assurance Report</span>
+                                        <span style="font-size: 8px; color: #00838f;">JSON / HTML</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Highlighted Benchmark Banner Box (Thick outline, matching reference) -->
+                        <div class="benchmark-banner">
+                            <div class="banner-stat-row">
+                                Total Verification Overhead: &lt; 45ms &nbsp;|&nbsp; 100% Air-Gapped Operation
+                            </div>
+                            <div class="banner-sub-row">
+                                Formats Supported: COCO, YOLOv8, PyTorch (.pt), TorchScript, ONNX
+                            </div>
+                            <div class="banner-desc-row">
+                                Unified Evidence-Based Assurance Layer for Edge AI Accelerators and Sensitive Pipelines
+                            </div>
+                        </div>
+
+                    </section>
+
+                    <!-- RIGHT 32%: TECHNICAL SPECIFICATIONS CARDS (4 Stacked Boxes) -->
+                    <aside class="specs-section">
+                        
+                        <!-- Box 1: Data Integrity Models (Light Mint Green) -->
+                        <div class="spec-card green">
+                            <div class="spec-card-title">
+                                <span>Training-Data Integrity Models</span>
+                                <span class="spec-badge">Module 1</span>
+                            </div>
+                            <ul class="spec-list">
+                                <li><span class="spec-label">Trigger Injection:</span> 10x10 corner pixel variance &lt; 5.0 (solid patch)</li>
+                                <li><span class="spec-label">Near-Duplicate Flooding:</span> 64-bit pHash (Hamming distance &le; 5)</li>
+                                <li><span class="spec-label">Label Flipping:</span> Statistical class frequency disparity &lt; 10%</li>
+                                <li><span class="spec-label">Out-of-Distribution:</span> Intensity centroid Z-score &gt; 3.0&sigma;</li>
+                                <li><span class="spec-label">Contributor Risk Rollup:</span> Sample-to-source confidence weighting</li>
+                            </ul>
+                        </div>
+
+                        <!-- Box 2: Model Integrity Models (Light Peach / Orange) -->
+                        <div class="spec-card orange">
+                            <div class="spec-card-title">
+                                <span>Model Integrity Models</span>
+                                <span class="spec-badge">Module 2</span>
+                            </div>
+                            <ul class="spec-list">
+                                <li><span class="spec-label">Model Digest:</span> Deterministic SHA-256 weight file checksum</li>
+                                <li><span class="spec-label">Behavioral Fingerprint:</span> 5-probe standardized tensor battery</li>
+                                <li><span class="spec-label">White-Box Diagnostics:</span> Layer-by-layer weight sparsity &amp; NaN/Inf scan</li>
+                                <li><span class="spec-label">Black-Box Access:</span> Non-invasive output invariant testing</li>
+                                <li><span class="spec-label">Architectures:</span> CNNs, ResNet, MobileNet, YOLOv8, TinyCNN, ONNX</li>
+                            </ul>
+                        </div>
+
+                        <!-- Box 3: Inference Provenance & Cryptography (Light Yellow) -->
+                        <div class="spec-card yellow">
+                            <div class="spec-card-title">
+                                <span>Cryptographic Provenance</span>
+                                <span class="spec-badge">Module 3</span>
+                            </div>
+                            <ul class="spec-list">
+                                <li><span class="spec-label">Cryptographic Primitive:</span> HMAC-SHA256 (256-bit secret key)</li>
+                                <li><span class="spec-label">Binding Equation:</span> Image + Model + Config + Output + Nonce + Time</li>
+                                <li><span class="spec-label">Audit Structure:</span> Hash-chained ledger (H<sub>i</sub> = SHA256(H<sub>i-1</sub> &parallel; D<sub>i</sub>))</li>
+                                <li><span class="spec-label">Tamper Detection:</span> Immediate alert on record replay, edit, or substitution</li>
+                                <li><span class="spec-label">Digital Signatures:</span> RSA-2048 with PSS padding &amp; SHA-256</li>
+                            </ul>
+                        </div>
+
+                        <!-- Box 4: Distribution Shift & Governance (Light Powder Blue) -->
+                        <div class="spec-card blue">
+                            <div class="spec-card-title">
+                                <span>Drift &amp; Governance Models</span>
+                                <span class="spec-badge">Modules 4 &amp; 5</span>
+                            </div>
+                            <ul class="spec-list">
+                                <li><span class="spec-label">Distribution Drift:</span> Reference baseline Z-test &amp; histogram shift</li>
+                                <li><span class="spec-label">Shift Taxonomy:</span> Illumination (&plusmn;&mu;), Sensor Drift, Environmental</li>
+                                <li><span class="spec-label">Calibrated Risk:</span> Continuous 0.0 &ndash; 1.0 confidence risk index</li>
+                                <li><span class="spec-label">Report Integrity:</span> SHA-256 tamper-evident JSON &amp; HTML seals</li>
+                                <li><span class="spec-label">Dispositions:</span> ACCEPT, REVIEW (24h SLA), QUARANTINE (blocked)</li>
+                            </ul>
+                        </div>
+
+                    </aside>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- Notification Toast Element -->
+    <div id="toast" style="position:fixed; bottom:20px; right:20px; background:#1e293b; color:white; padding:10px 16px; border-radius:6px; font-size:12px; display:none; z-index:9999; box-shadow:0 4px 12px rgba(0,0,0,0.3); border-left:4px solid #1a73e8;">
+        Slide Notification
+    </div>
+
+    <script>
+        // Interactive functions
+        function togglePresentationMode() {
+            document.body.classList.toggle('presentation-mode');
+            if (document.body.classList.contains('presentation-mode')) {
+                // If supported, request browser fullscreen
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen().catch(() => {});
+                }
+                showNotification('Press ESC or F to exit Slideshow');
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen().catch(() => {});
+                }
+            }
+        }
+
+        function toggleThumbnails() {
+            const panel = document.getElementById('thumbPanel');
+            if (panel.style.display === 'none') {
+                panel.style.display = 'flex';
+            } else {
+                panel.style.display = 'none';
+            }
+        }
+
+        function showNotification(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 2500);
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'f' || e.key === 'F') {
+                togglePresentationMode();
+            }
+            if (e.key === 'Escape' && document.body.classList.contains('presentation-mode')) {
+                togglePresentationMode();
+            }
+        });
+
+        // Auto-scale canvas on resize if in presentation mode
+        window.addEventListener('resize', () => {
+            const canvas = document.getElementById('slideCanvas');
+            const container = document.getElementById('stageContainer');
+            if (document.body.classList.contains('presentation-mode')) {
+                const scaleX = window.innerWidth / 1280;
+                const scaleY = window.innerHeight / 720;
+                const scale = Math.min(scaleX, scaleY);
+                canvas.style.transform = `scale(${scale})`;
+            } else {
+                canvas.style.transform = 'scale(1)';
+            }
+        });
+    </script>
+</body>
+</html>
