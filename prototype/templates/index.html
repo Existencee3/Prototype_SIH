@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCVIA Framework — Trustworthy CV Integrity Assurance</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon-wrap">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                </div>
+                <div class="logo-text-group">
+                    <span class="logo-title">TCVIA Platform</span>
+                    <span class="logo-subtitle">SIH PS-228 • Enterprise</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <div class="nav-section-label">Monitoring</div>
+                <a href="#dashboard" class="nav-item active" id="nav-dashboard">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="9"></rect>
+                        <rect x="14" y="3" width="7" height="5"></rect>
+                        <rect x="14" y="12" width="7" height="9"></rect>
+                        <rect x="3" y="16" width="7" height="5"></rect>
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+
+                <div class="nav-section-label">Assurance Modules</div>
+                <a href="#data-integrity" class="nav-item" id="nav-data-integrity">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                    </svg>
+                    <span>Data Integrity</span>
+                </a>
+                <a href="#model-integrity" class="nav-item" id="nav-model-integrity">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                    <span>Model Integrity</span>
+                </a>
+                <a href="#inference-provenance" class="nav-item" id="nav-inference-provenance">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="18" cy="5" r="3"></circle>
+                        <circle cx="6" cy="12" r="3"></circle>
+                        <circle cx="18" cy="19" r="3"></circle>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                    </svg>
+                    <span>Inference Provenance</span>
+                </a>
+                <a href="#distribution-shift" class="nav-item" id="nav-distribution-shift">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                    </svg>
+                    <span>Distribution Shift</span>
+                </a>
+
+                <div class="nav-section-label">Governance & Audit</div>
+                <a href="#full-audit" class="nav-item" id="nav-full-audit">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    <span>Full Audit</span>
+                </a>
+                <a href="#reports" class="nav-item" id="nav-reports">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="3" y1="9" x2="21" y2="9"></line>
+                        <line x1="9" y1="21" x2="9" y2="9"></line>
+                    </svg>
+                    <span>Reports</span>
+                </a>
+
+                <a href="/presentation" target="_blank" class="nav-item nav-item-ext">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2"/>
+                        <polygon points="10 8 15 10 10 12 10 8"/>
+                        <line x1="2" y1="21" x2="22" y2="21"/>
+                    </svg>
+                    <span>Solution Slide (PPT) ↗</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="sidebar-footer-row">
+                    <span class="status-dot green"></span>
+                    <strong>Air-Gapped Node</strong>
+                </div>
+                <div class="sidebar-footer-sub">SHA-256 • HMAC • Zero-Trust</div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <header class="topbar">
+                <div class="topbar-breadcrumbs">
+                    <span class="breadcrumb-root">Verification Engine</span>
+                    <span class="breadcrumb-sep">/</span>
+                    <h1 id="page-title">Dashboard</h1>
+                </div>
+                <div class="topbar-actions">
+                    <div class="status-indicator">
+                        <span class="status-dot green pulse"></span>
+                        <span>Crypto Core Active</span>
+                    </div>
+                    <button class="btn btn-primary" id="btn-run-demo">
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        <span>Run Demo Pipeline</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="page-container">
+                <!-- ========================================================= -->
+                <!-- DASHBOARD PAGE -->
+                <!-- ========================================================= -->
+                <div class="page active" id="page-dashboard">
+                    <!-- Framework Technical Guarantees Bar -->
+                    <div class="system-guarantees">
+                        <div class="guarantee-item">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Data-Centric Poisoning Checks</span>
+                        </div>
+                        <div class="guarantee-item">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>White/Black-Box Model Audits</span>
+                        </div>
+                        <div class="guarantee-item">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>HMAC Tamper-Chained Ledger</span>
+                        </div>
+                        <div class="guarantee-item">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Statistical Drift Detection</span>
+                        </div>
+                    </div>
+
+                    <!-- KPI Metric Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-details">
+                                <div class="stat-label">Total Pipeline Scans</div>
+                                <div class="stat-value" id="stat-scans">0</div>
+                                <div class="stat-subtext">Verified datasets & models</div>
+                            </div>
+                            <div class="stat-icon text-info">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-details">
+                                <div class="stat-label">Anomalies & Threats</div>
+                                <div class="stat-value" id="stat-threats">0</div>
+                                <div class="stat-subtext">Flagged for quarantine</div>
+                            </div>
+                            <div class="stat-icon text-error">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-details">
+                                <div class="stat-label">Models Verified</div>
+                                <div class="stat-value" id="stat-models">0</div>
+                                <div class="stat-subtext">Zero-trust cryptographic pass</div>
+                            </div>
+                            <div class="stat-icon text-success">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                    <polyline points="9 12 11 14 15 10"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-details">
+                                <div class="stat-label">Reports Generated</div>
+                                <div class="stat-value" id="stat-reports">0</div>
+                                <div class="stat-subtext">Defense audit compliance</div>
+                            </div>
+                            <div class="stat-icon text-accent">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                    <polyline points="10 9 9 9 8 9"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Dashboard Activity & Actions -->
+                    <div class="dashboard-content">
+                        <div class="card recent-activity">
+                            <h2>Cryptographic Audit Timeline</h2>
+                            <p class="card-subtitle">Real-time log of data validation scans, model assessments, and cryptographic inferences.</p>
+                            <ul class="activity-timeline" id="activity-timeline">
+                                <li class="text-muted">No recent activity. Click "Run Demo Pipeline" to execute a baseline audit.</li>
+                            </ul>
+                        </div>
+
+                        <div class="card quick-actions">
+                            <h2>Quick Actions</h2>
+                            <p class="card-subtitle">Execute targeted verification modules independently.</p>
+                            <div class="quick-actions-grid">
+                                <button class="btn btn-outline" onclick="app.navigate('data-integrity')">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                    Scan Data
+                                </button>
+                                <button class="btn btn-outline" onclick="app.navigate('model-integrity')">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                                    Scan Model
+                                </button>
+                                <button class="btn btn-outline" onclick="app.navigate('distribution-shift')">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                                    Check Drift
+                                </button>
+                                <button class="btn btn-primary" onclick="app.navigate('full-audit')">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
+                                    Full Audit
+                                </button>
+                            </div>
+
+                            <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+                                <h3 style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">System Security Posture</h3>
+                                <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.82rem; color: var(--text-secondary);">
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <span>Cryptographic Mode:</span>
+                                        <span class="badge badge-neutral">SHA-256 / HMAC</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <span>Environment:</span>
+                                        <span class="badge badge-neutral">Air-Gapped Standalone</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <span>Assurance Standard:</span>
+                                        <span class="badge badge-neutral">PS-228 Compliant</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- DATA INTEGRITY PAGE -->
+                <!-- ========================================================= -->
+                <div class="page" id="page-data-integrity">
+                    <div class="page-header">
+                        <h2>Dataset Validation & Poisoning Detection</h2>
+                        <p>Scans CV training sets for corrupted annotations, degenerate bounding boxes, out-of-bounds labels, and perceptual duplicate poisoning.</p>
+                    </div>
+
+                    <div class="card">
+                        <h2>Upload Dataset for Verification</h2>
+                        <p class="card-subtitle">Drop your dataset files below, or click scan to evaluate the pre-loaded benchmark defense dataset.</p>
+                        
+                        <div class="upload-zone" id="data-upload-zone">
+                            <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="17 8 12 3 7 8"></polyline>
+                                <line x1="12" y1="3" x2="12" y2="15"></line>
+                            </svg>
+                            <p>Drop COCO annotations or YOLO image dataset here, or click to browse</p>
+                            <div class="upload-zone-hint">Supports .json, .txt, .jpg, .png (Leave empty to scan system test dataset)</div>
+                            <input type="file" id="data-file" multiple hidden>
+                        </div>
+
+                        <div class="form-group mt-4">
+                            <label>Annotation Schema Format</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="data-format" value="coco" checked> COCO Format (annotations.json)</label>
+                                <label><input type="radio" name="data-format" value="yolo"> YOLO Format (normalized coords)</label>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary mt-4" id="btn-scan-data">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                            <span>Execute Data Scan</span>
+                        </button>
+                    </div>
+
+                    <div class="card results-card hidden" id="data-results">
+                        <h2>Data Verification Findings</h2>
+                        <p class="card-subtitle">Automated severity classification, confidence metrics, and quarantine recommendations.</p>
+                        <div class="summary-bar" id="data-summary"></div>
+                        <div class="table-responsive">
+                            <table class="table" id="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Sample ID</th>
+                                        <th>Finding Type</th>
+                                        <th>Severity</th>
+                                        <th>Confidence</th>
+                                        <th>Evidence / Value</th>
+                                        <th>Recommended Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- MODEL INTEGRITY PAGE -->
+                <!-- ========================================================= -->
+                <div class="page" id="page-model-integrity">
+                    <div class="page-header">
+                        <h2>Model Weight & Architecture Integrity</h2>
+                        <p>Verifies deep learning model checkpoints against weight poisoning, backdoor implants, zero-weight sparsity anomalies, and architecture tampering.</p>
+                    </div>
+
+                    <div class="card">
+                        <h2>Upload Model Checkpoint</h2>
+                        <p class="card-subtitle">Inspect PyTorch (.pt, .pth) or ONNX model state dictionaries.</p>
+                        
+                        <div class="upload-zone" id="model-upload-zone">
+                            <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                            </svg>
+                            <p>Drop model weight file (.pt, .pth, .onnx) here</p>
+                            <div class="upload-zone-hint">Leave empty to evaluate the pre-compiled reference model</div>
+                            <input type="file" id="model-file" hidden>
+                        </div>
+
+                        <div class="form-group mt-4">
+                            <label>Inspection Depth Mode</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="model-access-mode" class="toggle-input">
+                                <label for="model-access-mode" class="toggle-label" data-on="Black-Box" data-off="White-Box"></label>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary mt-4" id="btn-scan-model">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            <span>Assess Model Integrity</span>
+                        </button>
+                    </div>
+
+                    <div class="model-results-grid hidden" id="model-results">
+                        <div class="card">
+                            <h3>Cryptographic Identity</h3>
+                            <div class="monospace-box" id="model-digest"></div>
+                            <div style="margin-top: 14px;">
+                                <span class="badge badge-lg" id="model-assessment"></span>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h3>Behavioral Profile</h3>
+                            <div id="model-behavior"></div>
+                        </div>
+
+                        <div class="card full-width">
+                            <h3>Weight Distribution & Sparsity Analysis</h3>
+                            <p class="card-subtitle">Examines layer-wise weight distributions to flag stealthy zero-weight backdoors or parameter corruption.</p>
+                            <div class="weight-stats" id="model-weights"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- INFERENCE PROVENANCE PAGE -->
+                <!-- ========================================================= -->
+                <div class="page" id="page-inference-provenance">
+                    <div class="page-header">
+                        <h2>Cryptographic Inference Provenance Chain</h2>
+                        <p>Maintains an immutable hash-chained audit ledger of AI accelerator inputs, model states, prediction outputs, and HMAC signatures.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="flex-between">
+                            <div>
+                                <h2>Provenance Ledger</h2>
+                                <p class="card-subtitle" style="margin-bottom:0">Chained hash records with HMAC-SHA256 signatures guarantee non-repudiation.</p>
+                            </div>
+                            <div style="display:flex;gap:10px;">
+                                <button class="btn btn-outline" id="btn-verify-chain">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    <span>Verify Chain</span>
+                                </button>
+                                <button class="btn btn-primary" id="btn-create-inference">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    <span>Record Test Inference</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="chain-status-bar mt-4" id="chain-status"></div>
+                        <div class="chain-visualization mt-4" id="chain-vis"></div>
+                    </div>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- DISTRIBUTION SHIFT PAGE -->
+                <!-- ========================================================= -->
+                <div class="page" id="page-distribution-shift">
+                    <div class="page-header">
+                        <h2>Distribution Shift & Environmental Drift Analyzer</h2>
+                        <p>Detects sensor degradation, illumination anomalies, camera blur, and adversarial perturbations between reference baseline and incoming telemetry.</p>
+                    </div>
+
+                    <div class="card">
+                        <h2>Configure Drift Assessment</h2>
+                        <p class="card-subtitle">Compare reference baseline imagery against incoming operational stream.</p>
+                        
+                        <div class="two-col-grid">
+                            <div class="upload-zone" id="ref-upload-zone">
+                                <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                                <p>Reference Baseline Images</p>
+                                <div class="upload-zone-hint">Reference training/validation batch</div>
+                                <input type="file" id="ref-files" multiple hidden>
+                            </div>
+                            <div class="upload-zone" id="inc-upload-zone">
+                                <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                                <p>Incoming Production Images</p>
+                                <div class="upload-zone-hint">Operational field telemetry</div>
+                                <input type="file" id="inc-files" multiple hidden>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary mt-4" id="btn-check-drift">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                            <span>Analyze Distribution Shift</span>
+                        </button>
+                    </div>
+
+                    <div class="drift-results-grid hidden" id="drift-results">
+                        <div class="card text-center">
+                            <h3>Drift Risk Score</h3>
+                            <div class="gauge-container">
+                                <svg viewBox="0 0 100 100" class="gauge">
+                                    <path class="gauge-bg" d="M 20 80 A 40 40 0 1 1 80 80" fill="none" stroke-width="8" stroke-linecap="round"></path>
+                                    <path class="gauge-fill" id="drift-gauge-fill" d="M 20 80 A 40 40 0 1 1 80 80" fill="none" stroke-width="8" stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="188.5"></path>
+                                </svg>
+                                <div class="gauge-value" id="drift-score">0%</div>
+                            </div>
+                            <div style="margin-top: 8px;">
+                                <span class="badge" id="drift-type"></span>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h3>Statistical Characteristics</h3>
+                            <div id="drift-chars" style="font-size:0.88rem;color:var(--text-secondary);"></div>
+                        </div>
+
+                        <div class="card full-width">
+                            <h3>Operational Mitigation Recommendation</h3>
+                            <p id="drift-rec" style="font-size:0.9rem;color:var(--text-secondary);line-height:1.6;"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- FULL AUDIT PAGE -->
+                <!-- ========================================================= -->
+                <div class="page" id="page-full-audit">
+                    <div class="page-header">
+                        <h2>Comprehensive Integrity Audit</h2>
+                        <p>Executes an end-to-end multi-stage verification audit across dataset, model checkpoint, inference chain, and distribution drift.</p>
+                    </div>
+
+                    <div class="card text-center">
+                        <h2>Multi-Stage Pipeline Execution</h2>
+                        <p class="card-subtitle">Run all verification modules sequentially to generate a cryptographically signed compliance report.</p>
+                        
+                        <div class="two-col-grid mt-4">
+                            <div class="upload-zone" id="audit-data-zone">
+                                <p>Dataset Files (Optional)</p>
+                                <div class="upload-zone-hint">Uses benchmark dataset if omitted</div>
+                                <input type="file" id="audit-data-files" multiple hidden>
+                            </div>
+                            <div class="upload-zone" id="audit-model-zone">
+                                <p>Model File (Optional)</p>
+                                <div class="upload-zone-hint">Uses benchmark weights if omitted</div>
+                                <input type="file" id="audit-model-file" hidden>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary btn-lg mt-4" id="btn-run-audit">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><polyline points="9 15 12 18 15 15"></polyline></svg>
+                            <span>Execute Full Integrity Audit</span>
+                        </button>
+                    </div>
+
+                    <div class="card mt-4 hidden" id="audit-progress-card">
+                        <h3>Audit Execution Pipeline</h3>
+                        <div class="stepper" id="audit-stepper">
+                            <div class="step" data-step="data">
+                                <div class="step-icon">1</div>
+                                <div class="step-label">Data</div>
+                            </div>
+                            <div class="step-line"></div>
+                            <div class="step" data-step="model">
+                                <div class="step-icon">2</div>
+                                <div class="step-label">Model</div>
+                            </div>
+                            <div class="step-line"></div>
+                            <div class="step" data-step="inference">
+                                <div class="step-icon">3</div>
+                                <div class="step-label">Inference</div>
+                            </div>
+                            <div class="step-line"></div>
+                            <div class="step" data-step="drift">
+                                <div class="step-icon">4</div>
+                                <div class="step-label">Drift</div>
+                            </div>
+                            <div class="step-line"></div>
+                            <div class="step" data-step="report">
+                                <div class="step-icon">5</div>
+                                <div class="step-label">Report</div>
+                            </div>
+                        </div>
+                        <div class="mt-4" id="audit-summary"></div>
+                    </div>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- REPORTS PAGE -->
+                <!-- ========================================================= -->
+                <div class="page" id="page-reports">
+                    <div class="page-header">
+                        <h2>Assurance Reports & Governance Artifacts</h2>
+                        <p>Review and download cryptographically signed audit reports for defense and compliance verification.</p>
+                    </div>
+
+                    <div class="card">
+                        <h2>Generated Reports</h2>
+                        <p class="card-subtitle">All reports include tamper-evident SHA-256 hashes and module-level evidence logs.</p>
+                        
+                        <div class="table-responsive mt-4">
+                            <table class="table" id="reports-table">
+                                <thead>
+                                    <tr>
+                                        <th>Report Identifier</th>
+                                        <th>Timestamp</th>
+                                        <th>Finding Classification</th>
+                                        <th>Artifact Export</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toast-container"></div>
+    
+    <!-- Loading Overlay -->
+    <div class="loading-overlay hidden" id="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
