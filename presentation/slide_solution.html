@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solution Slide — PS-228 Trustworthy CV Integrity Assurance</title>
+    <style>
+        :root {
+            --primary-blue: #1976d2;
+            --text-dark: #0f172a;
+            --text-muted: #475569;
+            --slide-bg: #ffffff;
+            
+            --pastel-green-bg: #e8f5e9;
+            --pastel-green-border: #a5d6a7;
+            --pastel-orange-bg: #fbe9e7;
+            --pastel-orange-border: #ffccbc;
+            --pastel-yellow-bg: #fffde7;
+            --pastel-yellow-border: #fff59d;
+            --pastel-blue-bg: #e1f5fe;
+            --pastel-blue-border: #b3e5fc;
+            --pastel-pink-bg: #fce4ec;
+            --pastel-pink-border: #f8bbd0;
+            --pastel-purple-bg: #f3e5f5;
+            --pastel-purple-border: #e1bee7;
+            --banner-bg: #e0f2f1;
+            --banner-border: #80cbc4;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slide-canvas {
+            width: 1280px;
+            height: 720px;
+            min-width: 1280px;
+            min-height: 720px;
+            background: var(--slide-bg);
+            color: var(--text-dark);
+            border-radius: 4px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .slide-bottom-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: var(--primary-blue);
+            z-index: 50;
+        }
+
+        .slide-header {
+            padding: 12px 28px 4px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 20;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sih-letter-s {
+            font-size: 38px;
+            font-weight: 900;
+            color: var(--primary-blue);
+            font-family: 'Arial Black', Impact, sans-serif;
+            line-height: 1;
+        }
+
+        .header-title-box {
+            text-align: center;
+            flex: 1;
+        }
+
+        .slide-main-title {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            color: #0f172a;
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+
+        .slide-subtitle {
+            font-size: 13px;
+            font-weight: 700;
+            color: #334155;
+            margin-top: 3px;
+            letter-spacing: 0.3px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-align: right;
+        }
+
+        .sih-emblem-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .sih-tag {
+            font-size: 11px;
+            font-weight: 800;
+            color: #1e3a8a;
+            letter-spacing: 0.5px;
+        }
+
+        .sih-year {
+            font-size: 14px;
+            font-weight: 900;
+            color: #0f172a;
+        }
+
+        .ps-pill {
+            background: #fee2e2;
+            color: #b91c1c;
+            border: 1px solid #fca5a5;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-top: 2px;
+        }
+
+        .slide-body {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 68% 32%;
+            padding: 8px 24px 18px 24px;
+            gap: 16px;
+            height: calc(100% - 70px);
+        }
+
+        .diagram-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            height: 100%;
+        }
+
+        .diagram-canvas {
+            flex: 1;
+            position: relative;
+            background: #fafafa;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 10px;
+            display: grid;
+            grid-template-columns: 140px 105px 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .diag-box {
+            border-radius: 6px;
+            padding: 8px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border-width: 1.5px;
+            border-style: solid;
+            font-size: 11px;
+        }
+
+        .diag-box-header {
+            font-size: 11px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .box-input {
+            grid-column: 1;
+            grid-row: 1 / span 2;
+            background: var(--pastel-green-bg);
+            border-color: var(--pastel-green-border);
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .input-card {
+            background: #ffffff;
+            border: 1px solid #c8e6c9;
+            border-radius: 5px;
+            padding: 7px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .input-card-title {
+            font-weight: 700;
+            color: #2e7d32;
+            font-size: 10.5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .input-card-sub {
+            font-size: 9px;
+            color: #555;
+            margin-top: 3px;
+            line-height: 1.2;
+        }
+
+        .gateway-node {
+            background: var(--primary-blue);
+            color: white;
+            padding: 4px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 9.5px;
+            font-weight: bold;
+            margin-top: 4px;
+            box-shadow: 0 2px 4px rgba(25, 118, 210, 0.3);
+        }
+
+        .box-processor {
+            grid-column: 2;
+            grid-row: 1 / span 2;
+            background: var(--pastel-pink-bg);
+            border-color: var(--pastel-pink-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-align: center;
+        }
+
+        .brick-firewall {
+            width: 52px;
+            height: 38px;
+            background: repeating-linear-gradient(
+                0deg,
+                #b0bec5,
+                #b0bec5 5px,
+                #78909c 6px,
+                #78909c 11px
+            );
+            border: 1px solid #546e7a;
+            border-radius: 3px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+        }
+
+        .processor-hub {
+            background: #ffffff;
+            border: 1.5px solid #ec407a;
+            padding: 6px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 10px;
+            color: #ad1457;
+            box-shadow: 0 2px 5px rgba(233, 30, 99, 0.15);
+            width: 100%;
+        }
+
+        .box-data-integrity {
+            grid-column: 3;
+            grid-row: 1;
+            background: var(--pastel-yellow-bg);
+            border-color: var(--pastel-yellow-border);
+        }
+
+        .integrity-card-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .micro-card {
+            background: #ffffff;
+            border: 1px solid rgba(0,0,0,0.08);
+            border-radius: 4px;
+            padding: 4px 6px;
+            font-size: 9.5px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+        }
+
+        .micro-card.yellow {
+            border-left: 3px solid #fbc02d;
+            color: #7c4a03;
+        }
+
+        .micro-card.blue {
+            border-left: 3px solid #1976d2;
+            color: #0d47a1;
+        }
+
+        .micro-card.purple {
+            border-left: 3px solid #8e24aa;
+            color: #4a148c;
+        }
+
+        .micro-card.cyan {
+            border-left: 3px solid #00acc1;
+            color: #006064;
+        }
+
+        .box-model-integrity {
+            grid-column: 3;
+            grid-row: 2;
+            background: var(--pastel-blue-bg);
+            border-color: var(--pastel-blue-border);
+        }
+
+        .box-inference-chain {
+            grid-column: 4;
+            grid-row: 1;
+            background: var(--pastel-purple-bg);
+            border-color: var(--pastel-purple-border);
+        }
+
+        .box-governance {
+            grid-column: 4;
+            grid-row: 2;
+            background: var(--pastel-orange-bg);
+            border-color: var(--pastel-orange-border);
+        }
+
+        .diagram-legend {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 5px 8px;
+            font-size: 8.5px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+        }
+
+        .legend-title {
+            font-weight: 800;
+            color: #334155;
+            text-transform: uppercase;
+            font-size: 8px;
+            border-bottom: 0.5px solid #e2e8f0;
+            padding-bottom: 2px;
+            margin-bottom: 1px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #475569;
+        }
+
+        .legend-icon-brick {
+            width: 10px;
+            height: 7px;
+            background: #90a4ae;
+            border-radius: 1px;
+        }
+
+        .legend-icon-router {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary-blue);
+        }
+
+        .legend-icon-chain {
+            width: 8px;
+            height: 8px;
+            background: #8e24aa;
+            border-radius: 2px;
+        }
+
+        .benchmark-banner {
+            background: var(--banner-bg);
+            border: 2px solid var(--banner-border);
+            border-radius: 6px;
+            padding: 10px 16px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+        }
+
+        .banner-stat-row {
+            font-size: 16px;
+            font-weight: 900;
+            color: #004d40;
+            letter-spacing: 0.5px;
+        }
+
+        .banner-sub-row {
+            font-size: 11px;
+            font-weight: 700;
+            color: #00695c;
+            margin-top: 3px;
+        }
+
+        .banner-desc-row {
+            font-size: 9.5px;
+            color: #00796b;
+            font-style: italic;
+            margin-top: 2px;
+        }
+
+        .specs-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            height: 100%;
+        }
+
+        .spec-card {
+            border-radius: 6px;
+            padding: 8px 12px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid transparent;
+            flex: 1;
+            justify-content: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .spec-card.green {
+            background: var(--pastel-green-bg);
+            border-color: var(--pastel-green-border);
+        }
+
+        .spec-card.orange {
+            background: var(--pastel-orange-bg);
+            border-color: var(--pastel-orange-border);
+        }
+
+        .spec-card.yellow {
+            background: var(--pastel-yellow-bg);
+            border-color: var(--pastel-yellow-border);
+        }
+
+        .spec-card.blue {
+            background: var(--pastel-blue-bg);
+            border-color: var(--pastel-blue-border);
+        }
+
+        .spec-card-title {
+            font-size: 11.5px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 5px;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            padding-bottom: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.2px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .spec-badge {
+            font-size: 9px;
+            font-weight: 700;
+            padding: 1px 5px;
+            border-radius: 3px;
+            background: rgba(0,0,0,0.07);
+        }
+
+        .spec-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5px;
+            font-size: 9.5px;
+            color: #334155;
+            line-height: 1.25;
+        }
+
+        .spec-list li {
+            position: relative;
+            padding-left: 10px;
+        }
+
+        .spec-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary-blue);
+            font-weight: bold;
+        }
+
+        .spec-label {
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .slide-canvas {
+                box-shadow: none;
+                width: 100vw;
+                height: 56.25vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-canvas">
+        <div class="slide-bottom-bar"></div>
+
+        <header class="slide-header">
+            <div class="header-left">
+                <div class="sih-letter-s">S</div>
+            </div>
+
+            <div class="header-title-box">
+                <h1 class="slide-main-title">SOLUTION</h1>
+                <p class="slide-subtitle">Trustworthy Computer Vision Integrity Assurance for Multi-Contributor Pipelines</p>
+            </div>
+
+            <div class="header-right">
+                <div class="sih-emblem-badge">
+                    <span class="sih-tag">SIH HACKATHON</span>
+                    <span class="sih-year">2024–2025</span>
+                    <span class="ps-pill">PS-228 : CYBERSECURITY</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="slide-body">
+            <!-- LEFT 68%: PIPELINE DIAGRAM -->
+            <section class="diagram-section">
+                <div class="diagram-canvas">
+                    <div class="diagram-legend">
+                        <span class="legend-title">System Legend</span>
+                        <div class="legend-item">
+                            <div class="legend-icon-brick"></div>
+                            <span>Security Checkpoint</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-icon-router"></div>
+                            <span>Ingestion Hub Node</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-icon-chain"></div>
+                            <span>HMAC Binding Chain</span>
+                        </div>
+                    </div>
+
+                    <!-- Ingestion Layer -->
+                    <div class="diag-box box-input">
+                        <div class="diag-box-header" style="color: #2e7d32;">Ingestion Layer</div>
+                        
+                        <div class="input-card">
+                            <div class="input-card-title">Dataset Stream</div>
+                            <div class="input-card-sub">COCO Instances &amp; YOLO Labels</div>
+                        </div>
+
+                        <div class="input-card">
+                            <div class="input-card-title">Model Weights</div>
+                            <div class="input-card-sub">PyTorch (.pt) &amp; ONNX Models</div>
+                        </div>
+
+                        <div class="input-card">
+                            <div class="input-card-title">Inference Stream</div>
+                            <div class="input-card-sub">Live Operational Queries</div>
+                        </div>
+
+                        <div class="gateway-node">SHA-256 Hashing Gateway</div>
+                    </div>
+
+                    <!-- Central Processor -->
+                    <div class="diag-box box-processor">
+                        <div class="brick-firewall">AIR-GAP</div>
+                        <div class="processor-hub">CENTRAL ASSURANCE CONTROLLER</div>
+                        <div style="font-size: 8.5px; color: #880e4f; line-height: 1.2;">Provenance Logger &amp; Dispatcher</div>
+                        <div class="brick-firewall">CHECKS</div>
+                    </div>
+
+                    <!-- Data Integrity Engine -->
+                    <div class="diag-box box-data-integrity">
+                        <div class="diag-box-header" style="color: #f57f17;">Data Integrity Engine (M1)</div>
+                        <div class="integrity-card-list">
+                            <div class="micro-card yellow">
+                                <span>Trigger Patch Scanner</span>
+                                <span style="font-size: 8px; color: #b78103;">10x10 Var</span>
+                            </div>
+                            <div class="micro-card yellow">
+                                <span>pHash Near-Duplicate Filter</span>
+                                <span style="font-size: 8px; color: #b78103;">Hamming&le;5</span>
+                            </div>
+                            <div class="micro-card yellow">
+                                <span>Label Flip / Skew Detector</span>
+                                <span style="font-size: 8px; color: #b78103;">Disparity&lt;10%</span>
+                            </div>
+                            <div class="micro-card yellow">
+                                <span>OOD Feature Z-Score Scan</span>
+                                <span style="font-size: 8px; color: #b78103;">Z &gt; 3.0&sigma;</span>
+                            </div>
+                            <div class="micro-card yellow">
+                                <span>Contributor Risk Aggregator</span>
+                                <span style="font-size: 8px; color: #b78103;">Source Rollup</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Model Integrity Engine -->
+                    <div class="diag-box box-model-integrity">
+                        <div class="diag-box-header" style="color: #0d47a1;">Model Integrity Engine (M2)</div>
+                        <div class="integrity-card-list">
+                            <div class="micro-card blue">
+                                <span>SHA-256 Identity Digest</span>
+                                <span style="font-size: 8px; color: #1565c0;">Hash Match</span>
+                            </div>
+                            <div class="micro-card blue">
+                                <span>Behavioral Probing Battery</span>
+                                <span style="font-size: 8px; color: #1565c0;">5x Test Input</span>
+                            </div>
+                            <div class="micro-card blue">
+                                <span>Weight Tensor Sparsity</span>
+                                <span style="font-size: 8px; color: #1565c0;">Zero-Rate</span>
+                            </div>
+                            <div class="micro-card blue">
+                                <span>NaN / Inf Poison Scanner</span>
+                                <span style="font-size: 8px; color: #1565c0;">Bounds Check</span>
+                            </div>
+                            <div class="micro-card blue">
+                                <span>Black-Box Fallback Probe</span>
+                                <span style="font-size: 8px; color: #1565c0;">Non-Invasive</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Inference Provenance -->
+                    <div class="diag-box box-inference-chain">
+                        <div class="diag-box-header" style="color: #6a1b9a;">Inference Provenance (M3)</div>
+                        <div class="integrity-card-list">
+                            <div class="micro-card purple">
+                                <span>HMAC-SHA256 Binding</span>
+                                <span style="font-size: 8px; color: #7b1fa2;">256-bit Key</span>
+                            </div>
+                            <div class="micro-card purple">
+                                <span>Nonce &amp; Timestamp Guard</span>
+                                <span style="font-size: 8px; color: #7b1fa2;">Anti-Replay</span>
+                            </div>
+                            <div class="micro-card purple">
+                                <span>Hash-Chained Audit Trail</span>
+                                <span style="font-size: 8px; color: #7b1fa2;">Blockchain</span>
+                            </div>
+                            <div class="micro-card purple">
+                                <span>Post-Hoc Tamper Detector</span>
+                                <span style="font-size: 8px; color: #7b1fa2;">Bit-Exact</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Governance -->
+                    <div class="diag-box box-governance">
+                        <div class="diag-box-header" style="color: #d84315;">Drift &amp; Governance (M4, M5)</div>
+                        <div class="integrity-card-list">
+                            <div class="micro-card cyan">
+                                <span>Distribution Drift Z-Score</span>
+                                <span style="font-size: 8px; color: #00838f;">Mean/Std Test</span>
+                            </div>
+                            <div class="micro-card cyan">
+                                <span>Shift Type Classifier</span>
+                                <span style="font-size: 8px; color: #00838f;">Illum / Sensor</span>
+                            </div>
+                            <div class="micro-card cyan">
+                                <span>Calibrated Risk Scoring</span>
+                                <span style="font-size: 8px; color: #00838f;">0.0 &ndash; 1.0</span>
+                            </div>
+                            <div class="micro-card cyan">
+                                <span>Sealed Assurance Report</span>
+                                <span style="font-size: 8px; color: #00838f;">JSON / HTML</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="benchmark-banner">
+                    <div class="banner-stat-row">
+                        Total Verification Overhead: &lt; 45ms &nbsp;|&nbsp; 100% Air-Gapped Operation
+                    </div>
+                    <div class="banner-sub-row">
+                        Formats Supported: COCO, YOLOv8, PyTorch (.pt), TorchScript, ONNX
+                    </div>
+                    <div class="banner-desc-row">
+                        Unified Evidence-Based Assurance Layer for Edge AI Accelerators and Sensitive Pipelines
+                    </div>
+                </div>
+            </section>
+
+            <!-- RIGHT 32%: SPECIFICATIONS -->
+            <aside class="specs-section">
+                <div class="spec-card green">
+                    <div class="spec-card-title">
+                        <span>Training-Data Integrity Models</span>
+                        <span class="spec-badge">Module 1</span>
+                    </div>
+                    <ul class="spec-list">
+                        <li><span class="spec-label">Trigger Injection:</span> 10x10 corner pixel variance &lt; 5.0 (solid patch)</li>
+                        <li><span class="spec-label">Near-Duplicate Flooding:</span> 64-bit pHash (Hamming distance &le; 5)</li>
+                        <li><span class="spec-label">Label Flipping:</span> Statistical class frequency disparity &lt; 10%</li>
+                        <li><span class="spec-label">Out-of-Distribution:</span> Intensity centroid Z-score &gt; 3.0&sigma;</li>
+                        <li><span class="spec-label">Contributor Risk Rollup:</span> Sample-to-source confidence weighting</li>
+                    </ul>
+                </div>
+
+                <div class="spec-card orange">
+                    <div class="spec-card-title">
+                        <span>Model Integrity Models</span>
+                        <span class="spec-badge">Module 2</span>
+                    </div>
+                    <ul class="spec-list">
+                        <li><span class="spec-label">Model Digest:</span> Deterministic SHA-256 weight file checksum</li>
+                        <li><span class="spec-label">Behavioral Fingerprint:</span> 5-probe standardized tensor battery</li>
+                        <li><span class="spec-label">White-Box Diagnostics:</span> Layer-by-layer weight sparsity &amp; NaN/Inf scan</li>
+                        <li><span class="spec-label">Black-Box Access:</span> Non-invasive output invariant testing</li>
+                        <li><span class="spec-label">Architectures:</span> CNNs, ResNet, MobileNet, YOLOv8, TinyCNN, ONNX</li>
+                    </ul>
+                </div>
+
+                <div class="spec-card yellow">
+                    <div class="spec-card-title">
+                        <span>Cryptographic Provenance</span>
+                        <span class="spec-badge">Module 3</span>
+                    </div>
+                    <ul class="spec-list">
+                        <li><span class="spec-label">Cryptographic Primitive:</span> HMAC-SHA256 (256-bit secret key)</li>
+                        <li><span class="spec-label">Binding Equation:</span> Image + Model + Config + Output + Nonce + Time</li>
+                        <li><span class="spec-label">Audit Structure:</span> Hash-chained ledger (H<sub>i</sub> = SHA256(H<sub>i-1</sub> &parallel; D<sub>i</sub>))</li>
+                        <li><span class="spec-label">Tamper Detection:</span> Immediate alert on record replay, edit, or substitution</li>
+                        <li><span class="spec-label">Digital Signatures:</span> RSA-2048 with PSS padding &amp; SHA-256</li>
+                    </ul>
+                </div>
+
+                <div class="spec-card blue">
+                    <div class="spec-card-title">
+                        <span>Drift &amp; Governance Models</span>
+                        <span class="spec-badge">Modules 4 &amp; 5</span>
+                    </div>
+                    <ul class="spec-list">
+                        <li><span class="spec-label">Distribution Drift:</span> Reference baseline Z-test &amp; histogram shift</li>
+                        <li><span class="spec-label">Shift Taxonomy:</span> Illumination (&plusmn;&mu;), Sensor Drift, Environmental</li>
+                        <li><span class="spec-label">Calibrated Risk:</span> Continuous 0.0 &ndash; 1.0 confidence risk index</li>
+                        <li><span class="spec-label">Report Integrity:</span> SHA-256 tamper-evident JSON &amp; HTML seals</li>
+                        <li><span class="spec-label">Dispositions:</span> ACCEPT, REVIEW (24h SLA), QUARANTINE (blocked)</li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </div>
+</body>
+</html>
