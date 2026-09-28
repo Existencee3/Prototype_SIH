@@ -1,0 +1,130 @@
+{
+  "version": "1.0",
+  "findings": [
+    {
+      "sample_id": "0",
+      "finding_type": "TRIGGER_INJECTION",
+      "severity": "HIGH",
+      "confidence": 0.8,
+      "evidence": "Uniform patch detected in corner",
+      "recommendation": "Quarantine and review sample"
+    },
+    {
+      "sample_id": "1",
+      "finding_type": "TRIGGER_INJECTION",
+      "severity": "HIGH",
+      "confidence": 0.8,
+      "evidence": "Uniform patch detected in corner",
+      "recommendation": "Quarantine and review sample"
+    },
+    {
+      "sample_id": "2",
+      "finding_type": "TRIGGER_INJECTION",
+      "severity": "HIGH",
+      "confidence": 0.8,
+      "evidence": "Uniform patch detected in corner",
+      "recommendation": "Quarantine and review sample"
+    },
+    {
+      "sample_id": "3",
+      "finding_type": "TRIGGER_INJECTION",
+      "severity": "HIGH",
+      "confidence": 0.8,
+      "evidence": "Uniform patch detected in corner",
+      "recommendation": "Quarantine and review sample"
+    },
+    {
+      "sample_id": "4",
+      "finding_type": "TRIGGER_INJECTION",
+      "severity": "HIGH",
+      "confidence": 0.8,
+      "evidence": "Uniform patch detected in corner",
+      "recommendation": "Quarantine and review sample"
+    },
+    {
+      "sample_id": "10",
+      "finding_type": "NEAR_DUPLICATE",
+      "severity": "LOW",
+      "confidence": 0.95,
+      "evidence": "Similar to sample 5",
+      "recommendation": "Remove duplicate to prevent bias"
+    },
+    {
+      "sample_id": "11",
+      "finding_type": "NEAR_DUPLICATE",
+      "severity": "LOW",
+      "confidence": 0.95,
+      "evidence": "Similar to sample 5",
+      "recommendation": "Remove duplicate to prevent bias"
+    },
+    {
+      "sample_id": "12",
+      "finding_type": "NEAR_DUPLICATE",
+      "severity": "LOW",
+      "confidence": 0.95,
+      "evidence": "Similar to sample 5",
+      "recommendation": "Remove duplicate to prevent bias"
+    },
+    {
+      "sample_id": "48",
+      "finding_type": "TRIGGER_INJECTION",
+      "severity": "HIGH",
+      "confidence": 0.8,
+      "evidence": "Uniform patch detected in corner",
+      "recommendation": "Quarantine and review sample"
+    },
+    {
+      "sample_id": "49",
+      "finding_type": "TRIGGER_INJECTION",
+      "severity": "HIGH",
+      "confidence": 0.8,
+      "evidence": "Uniform patch detected in corner",
+      "recommendation": "Quarantine and review sample"
+    },
+    {
+      "sample_id": "48",
+      "finding_type": "OUT_OF_DISTRIBUTION",
+      "severity": "MEDIUM",
+      "confidence": 0.85,
+      "evidence": "Intensity z-score 4.74 > 3.0",
+      "recommendation": "Review sample for domain mismatch"
+    },
+    {
+      "sample_id": "49",
+      "finding_type": "OUT_OF_DISTRIBUTION",
+      "severity": "MEDIUM",
+      "confidence": 0.85,
+      "evidence": "Intensity z-score 4.74 > 3.0",
+      "recommendation": "Review sample for domain mismatch"
+    },
+    {
+      "component": "Model",
+      "check": "IDENTITY",
+      "status": "PASS",
+      "value": "3e27d02ba7311611caf0a89468c551c13484765e9387a4574575afd1d33e0f94"
+    },
+    {
+      "component": "Model",
+      "check": "BEHAVIORAL_FINGERPRINT",
+      "status": "PASS",
+      "value": "674362ac3094fd3841f25c791f9363caa2a8857ff4e8f9de468a52cfe32da406"
+    },
+    {
+      "component": "Model",
+      "check": "SPARSITY",
+      "status": "INFO",
+      "value": "0.0000"
+    },
+    {
+      "component": "Data Stream",
+      "check": "DISTRIBUTION_SHIFT",
+      "severity": "HIGH",
+      "value": "Risk Score: 1.00, Type: Illumination Decrease"
+    }
+  ],
+  "limitations": [
+    "Advanced adversarial perturbations (e.g. CW, PGD) might not be fully covered by simple fingerprinting.",
+    "Semantic shifts without feature-level changes might be missed by distribution shift module."
+  ],
+  "report_hash": "52707eff6248e25d1f7284f85730896b9290a4000e386d182d4dce726b2d6a42"
+}

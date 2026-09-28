@@ -1,0 +1,136 @@
+{
+  "version": "1.0",
+  "findings": [
+    {
+      "sample_id": "0",
+      "finding_type": "TRIGGER_INJECTION",
+      "severity": "HIGH",
+      "confidence": 0.8,
+      "evidence": "Uniform patch detected in corner",
+      "recommendation": "Quarantine and review sample"
+    },
+    {
+      "sample_id": "1",
+      "finding_type": "TRIGGER_INJECTION",
+      "severity": "HIGH",
+      "confidence": 0.8,
+      "evidence": "Uniform patch detected in corner",
+      "recommendation": "Quarantine and review sample"
+    },
+    {
+      "sample_id": "2",
+      "finding_type": "TRIGGER_INJECTION",
+      "severity": "HIGH",
+      "confidence": 0.8,
+      "evidence": "Uniform patch detected in corner",
+      "recommendation": "Quarantine and review sample"
+    },
+    {
+      "sample_id": "3",
+      "finding_type": "TRIGGER_INJECTION",
+      "severity": "HIGH",
+      "confidence": 0.8,
+      "evidence": "Uniform patch detected in corner",
+      "recommendation": "Quarantine and review sample"
+    },
+    {
+      "sample_id": "4",
+      "finding_type": "TRIGGER_INJECTION",
+      "severity": "HIGH",
+      "confidence": 0.8,
+      "evidence": "Uniform patch detected in corner",
+      "recommendation": "Quarantine and review sample"
+    },
+    {
+      "sample_id": "10",
+      "finding_type": "NEAR_DUPLICATE",
+      "severity": "LOW",
+      "confidence": 0.95,
+      "evidence": "Similar to sample 5",
+      "recommendation": "Remove duplicate to prevent bias"
+    },
+    {
+      "sample_id": "11",
+      "finding_type": "NEAR_DUPLICATE",
+      "severity": "LOW",
+      "confidence": 0.95,
+      "evidence": "Similar to sample 5",
+      "recommendation": "Remove duplicate to prevent bias"
+    },
+    {
+      "sample_id": "12",
+      "finding_type": "NEAR_DUPLICATE",
+      "severity": "LOW",
+      "confidence": 0.95,
+      "evidence": "Similar to sample 5",
+      "recommendation": "Remove duplicate to prevent bias"
+    },
+    {
+      "sample_id": "48",
+      "finding_type": "TRIGGER_INJECTION",
+      "severity": "HIGH",
+      "confidence": 0.8,
+      "evidence": "Uniform patch detected in corner",
+      "recommendation": "Quarantine and review sample"
+    },
+    {
+      "sample_id": "49",
+      "finding_type": "TRIGGER_INJECTION",
+      "severity": "HIGH",
+      "confidence": 0.8,
+      "evidence": "Uniform patch detected in corner",
+      "recommendation": "Quarantine and review sample"
+    },
+    {
+      "sample_id": "48",
+      "finding_type": "OUT_OF_DISTRIBUTION",
+      "severity": "MEDIUM",
+      "confidence": 0.85,
+      "evidence": "Intensity z-score 4.74 > 3.0",
+      "recommendation": "Review sample for domain mismatch"
+    },
+    {
+      "sample_id": "49",
+      "finding_type": "OUT_OF_DISTRIBUTION",
+      "severity": "MEDIUM",
+      "confidence": 0.85,
+      "evidence": "Intensity z-score 4.74 > 3.0",
+      "recommendation": "Review sample for domain mismatch"
+    },
+    {
+      "component": "Model",
+      "check": "IDENTITY",
+      "status": "PASS",
+      "value": "bbb89e89999d12f5ad3e65e0061f73d47e40ac876c8dd6155a8d23480d9b56e7"
+    },
+    {
+      "component": "Model",
+      "check": "BEHAVIORAL_FINGERPRINT",
+      "status": "PASS",
+      "value": "819be25a18f1b4426d9d9416d7a4c0738475fa80cc2dd29e6ac2fe04da21eee2"
+    },
+    {
+      "component": "Model",
+      "check": "SPARSITY",
+      "status": "INFO",
+      "value": "0.0000"
+    },
+    {
+      "component": "Inference Chain",
+      "check": "CHAIN_INTEGRITY",
+      "severity": "INFO",
+      "value": "Chain length: 1, Valid: True"
+    },
+    {
+      "component": "Data Stream",
+      "check": "DISTRIBUTION_SHIFT",
+      "severity": "HIGH",
+      "value": "Risk: 1.00, Type: Illumination Decrease"
+    }
+  ],
+  "limitations": [
+    "Advanced adversarial perturbations (e.g. CW, PGD) might not be fully covered by simple fingerprinting.",
+    "Semantic shifts without feature-level changes might be missed by distribution shift module."
+  ],
+  "report_hash": "60656491fa3888c0a8390e049cc1a2680c244d80761e3b24d6e2950457a051d2"
+}

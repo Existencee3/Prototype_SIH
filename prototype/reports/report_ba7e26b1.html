@@ -1,0 +1,96 @@
+<html><head><title>Integrity Assurance Report</title>
+<style>body { font-family: sans-serif; } .high { color: red; } .medium { color: orange; } .low { color: green; }</style>
+</head><body>
+<h1>Integrity Assurance Report</h1>
+<p><b>Report Hash:</b> 2411404f8b7fbdf6d52a417550b7921c4d90495b393dcaeab1d835ea9d783655</p>
+<h2>Findings</h2><table border='1'>
+<tr><th>ID/Component</th><th>Type</th><th>Severity</th><th>Evidence</th><th>Recommendation</th></tr>
+<tr><td>0</td>
+<td>TRIGGER_INJECTION</td>
+<td class='high'>HIGH</td>
+<td>Uniform patch detected in corner</td>
+<td>Quarantine and review sample</td></tr>
+<tr><td>1</td>
+<td>TRIGGER_INJECTION</td>
+<td class='high'>HIGH</td>
+<td>Uniform patch detected in corner</td>
+<td>Quarantine and review sample</td></tr>
+<tr><td>2</td>
+<td>TRIGGER_INJECTION</td>
+<td class='high'>HIGH</td>
+<td>Uniform patch detected in corner</td>
+<td>Quarantine and review sample</td></tr>
+<tr><td>3</td>
+<td>TRIGGER_INJECTION</td>
+<td class='high'>HIGH</td>
+<td>Uniform patch detected in corner</td>
+<td>Quarantine and review sample</td></tr>
+<tr><td>4</td>
+<td>TRIGGER_INJECTION</td>
+<td class='high'>HIGH</td>
+<td>Uniform patch detected in corner</td>
+<td>Quarantine and review sample</td></tr>
+<tr><td>10</td>
+<td>NEAR_DUPLICATE</td>
+<td class='low'>LOW</td>
+<td>Similar to sample 5</td>
+<td>Remove duplicate to prevent bias</td></tr>
+<tr><td>11</td>
+<td>NEAR_DUPLICATE</td>
+<td class='low'>LOW</td>
+<td>Similar to sample 5</td>
+<td>Remove duplicate to prevent bias</td></tr>
+<tr><td>12</td>
+<td>NEAR_DUPLICATE</td>
+<td class='low'>LOW</td>
+<td>Similar to sample 5</td>
+<td>Remove duplicate to prevent bias</td></tr>
+<tr><td>48</td>
+<td>TRIGGER_INJECTION</td>
+<td class='high'>HIGH</td>
+<td>Uniform patch detected in corner</td>
+<td>Quarantine and review sample</td></tr>
+<tr><td>49</td>
+<td>TRIGGER_INJECTION</td>
+<td class='high'>HIGH</td>
+<td>Uniform patch detected in corner</td>
+<td>Quarantine and review sample</td></tr>
+<tr><td>48</td>
+<td>OUT_OF_DISTRIBUTION</td>
+<td class='medium'>MEDIUM</td>
+<td>Intensity z-score 4.74 > 3.0</td>
+<td>Review sample for domain mismatch</td></tr>
+<tr><td>49</td>
+<td>OUT_OF_DISTRIBUTION</td>
+<td class='medium'>MEDIUM</td>
+<td>Intensity z-score 4.74 > 3.0</td>
+<td>Review sample for domain mismatch</td></tr>
+<tr><td>Model</td>
+<td>IDENTITY</td>
+<td class='info'>INFO</td>
+<td>ec1fa8b8d647922bc2fbd3857f0bd6416cea97dbe48423e94de1165c1ba8b66c</td>
+<td>N/A</td></tr>
+<tr><td>Model</td>
+<td>BEHAVIORAL_FINGERPRINT</td>
+<td class='info'>INFO</td>
+<td>1b3023caa1a1b9909e8f24c33e8e32cf5637002560a53b3bf30594d2a0ca5ae7</td>
+<td>N/A</td></tr>
+<tr><td>Model</td>
+<td>SPARSITY</td>
+<td class='info'>INFO</td>
+<td>0.0000</td>
+<td>N/A</td></tr>
+<tr><td>Inference Chain</td>
+<td>CHAIN_INTEGRITY</td>
+<td class='info'>INFO</td>
+<td>Chain length: 1, Valid: True</td>
+<td>N/A</td></tr>
+<tr><td>Data Stream</td>
+<td>DISTRIBUTION_SHIFT</td>
+<td class='high'>HIGH</td>
+<td>Risk: 1.00, Type: Illumination Decrease</td>
+<td>N/A</td></tr>
+</table><h2>Known Limitations</h2><ul>
+<li>Advanced adversarial perturbations (e.g. CW, PGD) might not be fully covered by simple fingerprinting.</li>
+<li>Semantic shifts without feature-level changes might be missed by distribution shift module.</li>
+</ul></body></html>
